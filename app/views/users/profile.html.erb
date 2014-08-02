@@ -1,0 +1,7 @@
+<h1>Set up your care point system here.</h1>
+<%= form_for @user do |f| %>
+	<%= f.text_field :name, placeholder: "Name" %>
+	<%= f.text_field :email, placeholder: "Email" %>
+	<%= f.submit "Submit this" %>
+<% end %>
+
