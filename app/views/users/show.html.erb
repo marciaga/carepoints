@@ -1,0 +1,8 @@
+
+<h1> <%= @user.name %>'s Profile Page </h1>
+
+<p> These are <%= @user.name %>'s Cares: </p> 
+
+<%= link_to "Delete #{@user.name}", :user, method: :delete, data: { confirm: 'Are you sure you want to delete your profile?'} %>
+<br/>
+<%= link_to "Back to all users", users_path %>

@@ -1,9 +1,19 @@
 Carepoints::Application.routes.draw do
-  get 'users/' => 'users#index'
-  root 'users#index'
+  # resources :SOMETHING
 
-  get 'users/profile' => 'users#profile'
+  get 'users/' => 'users#index'
+  get 'users/new' => 'users#new'
+  get 'users/:id/show' => 'users#show', as: :user 
+  get 'users/:id/edit' => 'users#edit'
   
+  patch 'users/:id/show' => 'users#update'
+  post 'users/' => 'users#create'
+
+  delete 'users/:id/show' => 'users#destroy'
+
+  root 'users#index'
+ end
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
@@ -58,4 +68,4 @@ Carepoints::Application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
-end
+

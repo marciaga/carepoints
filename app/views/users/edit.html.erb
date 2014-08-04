@@ -1,7 +1,9 @@
-<h1>Set up your care point system here.</h1>
+<h1>Edit your profile</h1>
+
 <%= form_for @user do |f| %>
 	<%= f.text_field :name, placeholder: "Name" %>
 	<%= f.text_field :email, placeholder: "Email" %>
-	<%= f.submit "Submit this" %>
+	<%= f.submit "Submit" %>
 <% end %>
 
+<%= link_to "Back to your profile", users_path %>

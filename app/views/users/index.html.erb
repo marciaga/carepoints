@@ -1,1 +1,11 @@
-<h1>HEADLINE</h1>
+<h1>All Users</h1>
+
+<ul>
+	<% @users.each do |u| %>
+		<li>
+		Name: <%= u.name %><br/>
+		Email: <%= u.email %> <br/>
+	  </li>
+	  <br/>
+<% end %>
+</ul>
