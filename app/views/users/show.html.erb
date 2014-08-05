@@ -5,4 +5,10 @@
 
 <%= link_to "Delete #{@user.name}", :user, method: :delete, data: { confirm: 'Are you sure you want to delete your profile?'} %>
 <br/>
+<h2>Enter Cares here</h2>
+<%= form_for [@user, Care.new] do |f| %>
+<%= f.text_field :care_item, placeholder: "Write your care item here" %>
+<%= f.submit %>
+<% end %>
+
 <%= link_to "Back to all users", users_path %>

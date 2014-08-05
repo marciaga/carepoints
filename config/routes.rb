@@ -1,9 +1,12 @@
 Carepoints::Application.routes.draw do
-  # resources :SOMETHING
+  resources :users do
+  resources :cares 
+  end
+
 
   get 'users/' => 'users#index'
   get 'users/new' => 'users#new'
-  get 'users/:id/show' => 'users#show', as: :user 
+  get 'users/:id/show' => 'users#show' #, as: :user 
   get 'users/:id/edit' => 'users#edit'
   
   patch 'users/:id/show' => 'users#update'
@@ -12,7 +15,8 @@ Carepoints::Application.routes.draw do
   delete 'users/:id/show' => 'users#destroy'
 
   root 'users#index'
- end
+
+end
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
