@@ -16,6 +16,8 @@ gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .js.coffee assets and views
 gem 'coffee-rails', '~> 4.0.0'
 
+# use bootstrap
+gem 'bootstrap-sass', '~> 3.2.0'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
@@ -34,13 +36,13 @@ group :doc do
 end
 
 # Use ActiveModel has_secure_password
- gem 'bcrypt', '~> 3.1.7'
+gem 'bcrypt', '~> 3.1.7'
 
 # use mongo mapper
-gem 'mongo_mapper'
+# gem 'mongo_mapper'
 
 # use bson_ext
-gem 'bson_ext'
+# gem 'bson_ext'
 
 # Use unicorn as the app server
 # gem 'unicorn'

@@ -6,7 +6,7 @@
 <ul>
 	<% @user.cares.each do |u| %>
 		<li>
-		<%= u.care_item %>, valued at <%= u.value %> care points <%= link_to "Delete this care" %></li>
+		<%= u.care_item %>, valued at <%= u.value %> care points <%= link_to "Delete this care"%></li>
 	  <br/>
 <% end %>
 </ul>
