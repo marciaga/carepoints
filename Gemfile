@@ -36,6 +36,12 @@ end
 # Use ActiveModel has_secure_password
  gem 'bcrypt', '~> 3.1.7'
 
+# use mongo mapper
+gem 'mongo_mapper'
+
+# use bson_ext
+gem 'bson_ext'
+
 # Use unicorn as the app server
 # gem 'unicorn'
 

@@ -2,13 +2,24 @@
 <h1> <%= @user.name %>'s Profile Page </h1>
 
 <p> These are <%= @user.name %>'s Cares: </p> 
+<!-- loop through user's cares here -->
+<ul>
+	<% @user.cares.each do |u| %>
+		<li>
+		<%= u.care_item %>, valued at <%= u.value %> care points <%= link_to "Delete this care" %></li>
+	  <br/>
+<% end %>
+</ul>
 
-<%= link_to "Delete #{@user.name}", :user, method: :delete, data: { confirm: 'Are you sure you want to delete your profile?'} %>
 <br/>
 <h2>Enter Cares here</h2>
 <%= form_for [@user, Care.new] do |f| %>
 <%= f.text_field :care_item, placeholder: "Write your care item here" %>
+<%= f.text_field :value, placeholder: "value" %>
 <%= f.submit %>
 <% end %>
+
+
+<%= link_to "Delete #{@user.name}", :user, method: :delete, data: { confirm: 'Are you sure you want to delete your profile?'} %>
 
 <%= link_to "Back to all users", users_path %>

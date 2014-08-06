@@ -15,12 +15,3 @@ users = User.create([
 	}
 ])
 
-cares = Care.create([
-	{ care: 'Sitting in traffic for 3 hours'
-	},
-	{ care: 'Buses that are 15 minutes late'
-	},
-	{ care: 'When my phone loads apps too slowly'
-	}
-	])
-
