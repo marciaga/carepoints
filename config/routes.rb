@@ -3,6 +3,7 @@ Carepoints::Application.routes.draw do
   resources :cares 
   end
 
+  resource :session, only: [:new, :create, :destroy] # creates 7 routes instead of 8 -- omits index
 
   get 'users/' => 'users#index'
   get 'users/new' => 'users#new'

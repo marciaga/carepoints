@@ -3,21 +3,21 @@ class UsersController < ApplicationController
 		@users = User.all
 	end
 
-	def show
-		@user = User.find(params[:id])
-	end
-
 	def new
 		@user = User.new		
 	end	
 
 	def create
-		@user = User.new(params.require(:user).permit(:name, :email))
+		@user = User.new(params.require(:user).permit(:name, :email, :password, :password_confirmation))
 		if @user.save
 			redirect_to users_path
 		else
 			render 'new'
 		end
+	end
+
+	def show
+		@user = User.find(params[:id])
 	end
 
 	def edit
@@ -33,9 +33,11 @@ class UsersController < ApplicationController
 	end
 
 	def destroy
-		@user = User.find(params[:id])
-		@user.destroy
+		@user = User.find(params[:id]).destroy
 		redirect_to users_path
 	end
+
+
+
 end
 
