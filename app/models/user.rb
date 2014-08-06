@@ -5,6 +5,7 @@ class User
   field :email, type: String
   field :points, type: Integer
   field :password_digest, type: String
+  field :is_active, type: Mongoid::Boolean, default: true
 
   has_secure_password
 

@@ -1,21 +1,12 @@
-Carepoints::Application.routes.draw do
+  Carepoints::Application.routes.draw do
   resources :users do
   resources :cares 
   end
 
   resource :session, only: [:new, :create, :destroy] # creates 7 routes instead of 8 -- omits index
 
-  get 'users/' => 'users#index'
-  get 'users/new' => 'users#new'
-  get 'users/:id/show' => 'users#show' #, as: :user 
-  get 'users/:id/edit' => 'users#edit'
-  
-  patch 'users/:id/show' => 'users#update'
-  post 'users/' => 'users#create'
+  get 'users/:id/reactivate' => 'users#reactivate', as: :reactivate_user
 
-  delete 'users/:id/show' => 'users#destroy'
-
-  root 'users#index'
 
 end
 
