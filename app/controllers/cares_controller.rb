@@ -9,9 +9,11 @@ class CaresController < ApplicationController
 		end
 	end
 
-	def destroy
-	@care = Care.find(params[:care_id]).destroy
-	redirect_to @user
-	
+	def 
+
+	def destroy	
+		@user = User.find(params[:user_id])
+		@care = @user.cares.find(params[:id]).delete
+		redirect_to @user
 	end
 end

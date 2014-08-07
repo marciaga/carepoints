@@ -5,8 +5,11 @@
 <!-- loop through user's cares here -->
 <ul>
 	<% @user.cares.each do |u| %>
-		<li>
-		<%= u.care_item %>, valued at <%= u.value %> care points <%= link_to "Delete this care"%></li>
+		<li> 
+		<%= u.care_item %>, valued at <%= u.value %> care points
+		<%= link_to "Edit this care" %> 
+		<%= link_to "Delete this care", user_care_path(params[:id], u.id), method: :delete, data: { confirm: 'Are you sure you want to delete this care?' } %>
+	</li>
 	  <br/>
 <% end %>
 </ul>
