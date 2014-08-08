@@ -34,7 +34,7 @@ class UsersController < ApplicationController
 				redirect_to new_session_path
 			end
 		elsif @user.update_attributes(params.require(:user).permit(:name, :email, :is_active))
-			redirect_to users_path
+			redirect_to user_path
 		else 
 			render :edit
 		end

@@ -1,13 +1,17 @@
 
 <h1> <%= @user.name %>'s Profile Page </h1>
 
+<h2> <%= @user.name %> has <%= @user.points %> points today</h2>
+
 <p> These are <%= @user.name %>'s Cares: </p> 
 <!-- loop through user's cares here -->
 <ul>
 	<% @user.cares.each do |u| %>
 		<li> 
 		<%= u.care_item %>, valued at <%= u.value %> care points
-		<%= link_to "Edit this care" %> 
+		<br/>
+
+		<%= link_to "Edit this care", edit_user_care_path(params[:id], u.id, method: :patch	) %> 
 		<%= link_to "Delete this care", user_care_path(params[:id], u.id), method: :delete, data: { confirm: 'Are you sure you want to delete this care?' } %>
 	</li>
 	  <br/>
@@ -23,6 +27,9 @@
 <% end %>
 
 
+
+<%= link_to "Edit #{@user.name}", edit_user_path %>
 <%= link_to "Delete #{@user.name}", :user, method: :delete, data: { confirm: 'Are you sure you want to delete your profile?'} %>
+ 
 
 <%= link_to "Back to all users", users_path %>

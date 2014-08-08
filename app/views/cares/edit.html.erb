@@ -1,0 +1,12 @@
+<%= form_for [@user, @care] do |f|	%>
+	<%= f.text_field :care_item, placeholder: "Care Item" %>
+	<%= f.text_field :value, placeholder: "Value" %>
+	<%= f.submit "Submit" %>
+<% end %>
+
+<%= link_to "Back to your profile", user_path(params[:user_id]) %>
+
+
+
+
+

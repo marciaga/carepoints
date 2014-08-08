@@ -14,7 +14,7 @@
 			else
 			# store as a cookie in the users' browser the ID of them, indicating they're logged in
 				session[:user_id] = u.id.to_s
-				redirect_to users_path
+				redirect_to user_path(u.id)
 			end
 		else
 			#go back to the login page

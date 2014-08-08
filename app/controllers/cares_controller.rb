@@ -9,7 +9,17 @@ class CaresController < ApplicationController
 		end
 	end
 
-	def 
+	def edit
+		@user = User.find(params[:user_id])
+		@care = @user.cares.find(params[:id])
+	end
+
+	def update
+		@user = User.find(params[:user_id])
+		@care = @user.cares.find(params[:id])
+		@care.update_attributes(params.require(:care).permit(:care_item, :value))
+		redirect_to user_path(params[:user_id])
+	end
 
 	def destroy	
 		@user = User.find(params[:user_id])
@@ -17,3 +27,4 @@ class CaresController < ApplicationController
 		redirect_to @user
 	end
 end
+
