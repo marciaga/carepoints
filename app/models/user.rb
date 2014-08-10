@@ -11,4 +11,5 @@ class User
   has_secure_password
 
   embeds_many :cares
+  embeds_many :histories
 end
