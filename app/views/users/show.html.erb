@@ -9,6 +9,25 @@
   <%= value_sum %>
   points worth of care items!
  </h2>
+ <!-- This is the Current Daily Care Points total -->
+<h2> 
+	<% (value_sum -= (value_sum * 0.3)).to_i %>
+	<% @user.histories.each do |u| %>
+		
+		<% if Date.today == u.date %>
+			<% value_sum -= u.value %>
+		<% end %>
+	<% end %>
+	<% if value_sum.to_i <= 0 %>
+		<%= "You have no care points left for the day..." %>
+		<% @valuezero = true %>
+		<% else %> 
+		<%= "You Have " + value_sum.to_i.to_s + " Care Points Remaining For the Day" %>
+		
+		
+	<% end %>
+	
+</h2>
 <!-- This is the running display of a User's Cares-->
 <p> These are <%= @user.name %>'s Cares: </p> 
 <ul>
@@ -22,7 +41,12 @@
 				<%= f.hidden_field :date, :value => Date.today %>
 				<%= f.hidden_field :care_item, :value => u.care_item %>
 				<%= f.hidden_field :value, :value => u.value %>
-				<%= f.submit 'Care About This!', class: 'btn btn-warning btn-sm' %>
+				<% if @valuezero %>
+			  	<%= f.submit 'Care About This!', disabled: true, class: 'btn btn-warning btn-sm' %>
+			  <% else %>
+			  		<%= f.submit 'Care About This!', disabled: false, class: 'btn btn-warning btn-sm' %>
+			  <% end %>
+
 			<% end %>
 			<!-- This is the Edit This Care Button -->
 			<%= link_to "Edit this care", edit_user_care_path(params[:id], u.id, method: :patch), class: 'btn btn-success btn-sm' %> 
@@ -44,23 +68,7 @@
 
 <br/><br/><br/><br/>
 
-<!-- This is the Current Daily Care Points total -->
-<h2> 
-	<% (value_sum -= (value_sum * 0.3)).to_i %>
-	<% @user.histories.each do |u| %>
-		
-		<% if Date.today == u.date %>
-			<% value_sum -= u.value %>
-		<% end %>
-	<% end %>
-	<% if value_sum.to_i <= 0 %>
-		<%= "You have no care points left for the day..." %>
-		<% else %> 
-		<%= "You Have " + value_sum.to_i.to_s + " Care Points Remaining For the Day" %>
-		
-	<% end %>
-	
-</h2>
+
 
 <br/><br/><br/><br/>
 <!-- Iterates through the User's History by Current Date -->
