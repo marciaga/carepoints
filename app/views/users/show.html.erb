@@ -1,6 +1,6 @@
 
 <h1> <%= @user.name %>'s Profile Page </h1>
-
+<!-- This is the display of a User's Total Care Points-->
 <h2> <%= @user.name %> has 
 	<% value_sum = 0 %>
 	<% @user.cares.each do |u| %>
@@ -9,23 +9,29 @@
   <%= value_sum %>
   points worth of care items!
  </h2>
-
+<!-- This is the running display of a User's Cares-->
 <p> These are <%= @user.name %>'s Cares: </p> 
-<!-- loop through user's cares here -->
 <ul>
 	<% @user.cares.each do |u| %>
 		<li> 
-		<%= link_to u.care_item %>, valued at <%= u.value %> care points 
+		<%= u.care_item %>, valued at <%= u.value %> care points 
 		<br/>
-
-		<%= link_to "Edit this care", edit_user_care_path(params[:id], u.id, method: :patch	), class: 'btn btn-primary btn-small' %> 
-		<%= link_to "Delete this care", user_care_path(params[:id], u.id), method: :delete, data: { confirm: 'Are you sure you want to delete this care?' },	 class: 'btn btn-primary btn-large' %>
+		<!-- This populates the User Histories -->
+		<%= form_for [@user, History.new] do |f| %>
+		<%= f.hidden_field :date, :value => Date.today %>
+		<%= f.hidden_field :care_item, :value => u.care_item %>
+		<%= f.hidden_field :value, :value => u.value %>
+		<%= f.submit 'Care About This!', class: 'btn btn-warning btn-sm'  %>
+		<% end %>
+		<%= link_to "Edit this care", edit_user_care_path(params[:id], u.id, method: :patch), class: 'btn btn-success btn-sm' %> 
+		<%= link_to "Delete this care", user_care_path(params[:id], u.id), method: :delete, data: { confirm: 'Are you sure you want to delete this care?' },	 class: 'btn btn-info btn-sm' %>
 	</li>
 	  <br/>
 <% end %>
 </ul>
 
 <br/>
+<!-- This is the form for entering Cares -->
 <h2>Enter Cares here</h2>
 <%= form_for [@user, Care.new] do |f| %>
 <%= f.text_field :care_item, placeholder: "Write your care item here" %>
@@ -35,10 +41,13 @@
 
 <br/><br/><br/><br/>
 
+<!-- This is the Current Daily Care Points total -->
 <h2>You Have 
 	<%= value_sum -= (value_sum * 0.3).to_i %>
 	Care Points Remaining For the Day
 </h2>
+
+<br/><br/><br/><br/>
 
 
 
