@@ -5,5 +5,5 @@ class History
   field :value, type: Integer
 
   embedded_in :user, :inverse_of => :histories
-  # embeds_many :cares 
+ 
 end
