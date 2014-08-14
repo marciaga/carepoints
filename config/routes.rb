@@ -1,4 +1,5 @@
   Carepoints::Application.routes.draw do
+  root 'pages#home'  
   resources :users do
     resources :cares 
     resource :histories, only: [:create]
@@ -7,7 +8,7 @@
 
   resource :session, only: [:new, :create, :destroy] # creates 3 routes instead of 8 -- omits index
 
-  root 'users#index'
+  
   get 'users/:id/reactivate' => 'users#reactivate', as: :reactivate_user
 
 

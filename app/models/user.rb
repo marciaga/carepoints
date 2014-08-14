@@ -7,7 +7,8 @@ class User
   field :password_digest, type: String
   field :is_active, type: Mongoid::Boolean, default: true
   validates_presence_of :name, :email, :password_digest
-
+  validates_uniqueness_of :email
+  
   has_secure_password
 
   embeds_many :cares

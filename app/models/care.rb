@@ -4,6 +4,8 @@ class Care
   field :value, type: Integer
 
   validates_presence_of :care_item, :value
+  validates_numericality_of :value
+  
   embedded_in :user, :inverse_of => :cares
   
 end
