@@ -44,12 +44,17 @@ class UsersController < ApplicationController
 		@user = User.find(params[:id])
 		@user.is_active = false
 		@user.save
-		redirect_to users_path
+		redirect_to root_path
 	end
 
 	def reactivate
 		@user = User.find(params[:id])
 	end
+
+	def value_display
+		
+	end
+
 
 
 end

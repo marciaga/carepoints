@@ -4,15 +4,17 @@
 	</div>
 	<div class="row">
 		<div class="col-md-5 col-md-offset-1">
-		  <!-- This is the display of a User's Total Care Points-->
-			<h2> You have a total of
+		  <!-- This is the display of a User's Daily Care Points-->
 				<% value_sum = 0 %>
 				<% @user.cares.each do |u| %>
 				<% value_sum += u.value %>
 			  <% end %>
-			  <%= value_sum %>
-			  Care Points
-			</h2>
+				<% (value_sum -= (value_sum * 0.3)).to_i %>
+				<% @user.histories.each do |u| %>
+								<% if Date.today == u.date %>
+									<% value_sum -= u.value %>
+								<% end %>
+							<% end %>
 			<!-- This is the running display of a User's Cares-->
 			<h2> These are your Cares: </h2> 
 			<ul class="list-unstyled">
@@ -21,16 +23,27 @@
 						<%= u.care_item %>, worth <%= u.value %> care points 
 						<br/>
 						<!-- This populates the User Histories -->
+						<!-- calculation -->
+							
+							<% if value_sum+1 <= u.value %>
+								<% disable_care = true %>
+							<% end %>
+						
 						<%= form_for [@user, History.new] do |f| %>
 							<%= f.hidden_field :date, :value => Date.today %>
 							<%= f.hidden_field :care_item, :value => u.care_item %>
 							<%= f.hidden_field :value, :value => u.value %>
-							<% if @valuezero == true %>
-						  	<%= f.submit 'Care About This!', disabled: true, class: 'btn btn-warning btn-sm' %>
-						  <% else %>
-						  	<%= f.submit 'Care About This!', disabled: false, class: 'btn btn-warning btn-sm' %>
-						  <% end %>
+							
+							
+						
+							<!--button action -->
+							<% if disable_care == true %>
+								<%= f.submit 'Care About This!', disabled: true, class: 'btn btn-warning btn-sm' %>
+							<% else %>
+								<%= f.submit 'Care About This!', disabled: false, class: 'btn btn-warning btn-sm' %>
+							<% end %>
 						<% end %>
+						
 						<!-- This is the Edit This Care Button -->
 						<%= link_to "Edit this care", edit_user_care_path(params[:id], u.id, method: :patch), class: 'btn btn-success btn-sm' %> 
 						<!-- This is the Delete This Care Button -->
@@ -56,24 +69,14 @@
 		<div class="col-md-5">
 			<!-- This is the Current Daily Care Points total -->
 			<h2> 
-				<% (value_sum -= (value_sum * 0.3)).to_i %> 
-				<% @user.histories.each do |u| %>
-					<% if Date.today == u.date %>
-						<% value_sum -= u.value %>
-					<% end %>
-				<% end %>
+				
 
 				<% if value_sum <= 0 %>
 					<%= "You have no care points left for the day..." %>
 				<% else %>
 					<%= "You Have " + value_sum.to_i.to_s + " Care Points Left for the Day" %>
-					<% @user.cares.each do |u| %>
-						<% if u.value >= value_sum  %>
-							<!-- set disable button to true when the care's value is less than value_sum -->
-							<% @valuezero = true %>
-						<% end %>
-					<% end %>
-				<% end %>
+				<% end %>	
+				
 			</h2>
 		  <!-- Iterates through the User's History by Current Date -->
 			<h2>These are <%= @user.name %>'s Cares Today:</h2>
