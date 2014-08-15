@@ -11,7 +11,7 @@ class UsersController < ApplicationController
 	def create
 		@user = User.new(params.require(:user).permit(:name, :email, :password, :password_confirmation))
 		if @user.save
-			redirect_to users_path
+			redirect_to new_session_path
 		else
 			render :new
 		end
@@ -36,7 +36,7 @@ class UsersController < ApplicationController
 		elsif @user.update_attributes(params.require(:user).permit(:name, :email, :is_active))
 			redirect_to user_path
 		else 
-			render :edit
+			render :edit	
 		end
 	end
 

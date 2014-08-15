@@ -1,93 +1,84 @@
-
-<h1> <%= @user.name %>'s Profile Page </h1>
-<!-- This is the display of a User's Total Care Points-->
-<h2> <%= @user.name %> has 
-	<% value_sum = 0 %>
-	<% @user.cares.each do |u| %>
-	<% value_sum += u.value %>
-  <% end %>
-  <%= value_sum %>
-  points worth of care items!
- </h2>
- <!-- This is the Current Daily Care Points total -->
-<h2> 
-	<% (value_sum -= (value_sum * 0.3)).to_i %>
-	<% @user.histories.each do |u| %>
-		
-		<% if Date.today == u.date %>
-			<% value_sum -= u.value %>
-		<% end %>
-	<% end %>
-	<% if value_sum.to_i <= 0 %>
-		<%= "You have no care points left for the day..." %>
-		<% @valuezero = true %>
-		<% else %> 
-		<%= "You Have " + value_sum.to_i.to_s + " Care Points Remaining For the Day" %>
-		
-		
-	<% end %>
-	
-</h2>
-<!-- This is the running display of a User's Cares-->
-<p> These are <%= @user.name %>'s Cares: </p> 
-<ul>
-	<% @user.cares.each do |u| %>
-		<li> 
-			<%= u.care_item %>, valued at <%= u.value %> care points 
-			<br/>
-			<!-- This populates the User Histories -->
-
-			<%= form_for [@user, History.new] do |f| %>
-				<%= f.hidden_field :date, :value => Date.today %>
-				<%= f.hidden_field :care_item, :value => u.care_item %>
-				<%= f.hidden_field :value, :value => u.value %>
-				<% if @valuezero %>
-			  	<%= f.submit 'Care About This!', disabled: true, class: 'btn btn-warning btn-sm' %>
-			  <% else %>
-			  		<%= f.submit 'Care About This!', disabled: false, class: 'btn btn-warning btn-sm' %>
+<div class="container-fluid">
+	<div class="row">
+		<h1 class="text-center"> <%= @user.name %>'s Profile Page </h1>
+	</div>
+	<div class="row">
+		<div class="col-md-5 col-md-offset-1">
+		  <!-- This is the display of a User's Total Care Points-->
+			<h2> You have a total of
+				<% value_sum = 0 %>
+				<% @user.cares.each do |u| %>
+				<% value_sum += u.value %>
 			  <% end %>
-
+			  <%= value_sum %>
+			  Care Points
+			</h2>
+			<!-- This is the running display of a User's Cares-->
+			<h2> These are your Cares: </h2> 
+			<ul class="list-unstyled">
+				<% @user.cares.each do |u| %>
+					<li> <span class="glyphicon glyphicon-heart"></span>
+						<%= u.care_item %>, worth <%= u.value %> care points 
+						<br/>
+						<!-- This populates the User Histories -->
+						<%= form_for [@user, History.new] do |f| %>
+							<%= f.hidden_field :date, :value => Date.today %>
+							<%= f.hidden_field :care_item, :value => u.care_item %>
+							<%= f.hidden_field :value, :value => u.value %>
+							<% if @valuezero %>
+						  	<%= f.submit 'Care About This!', disabled: true, class: 'btn btn-warning btn-sm' %>
+						  <% else %>
+						  		<%= f.submit 'Care About This!', disabled: false, class: 'btn btn-warning btn-sm' %>
+						  <% end %>
+						<% end %>
+						<!-- This is the Edit This Care Button -->
+						<%= link_to "Edit this care", edit_user_care_path(params[:id], u.id, method: :patch), class: 'btn btn-success btn-sm' %> 
+						<!-- This is the Delete This Care Button -->
+						<%= link_to "Delete this care", user_care_path(params[:id], u.id), method: :delete, data: { confirm: 'Are you sure you want to delete this care?' },	 class: 'btn btn-info btn-sm' %>
+					</li>
+				  <br/>
+				<% end %>
+			</ul>
+	    <!-- This is the form for entering Cares -->	
+			<h2>Enter a new care</h2>
+			<%= form_for [@user, Care.new] do |f| %>
+				<div class="form-group">
+					<%= f.text_field :care_item, placeholder: "Enter your care here", class: 'form-control' %>
+				</div>
+				<div class="form-group">
+					<%= f.text_field :value, placeholder: "Enter your care's value", class: 'form-control' %>
+				</div>
+				<div class="form-group">
+					<%= f.submit "Submit", class: 'btn btn-primary btn-large btn-block' %>
+				</div>
 			<% end %>
-			<!-- This is the Edit This Care Button -->
-			<%= link_to "Edit this care", edit_user_care_path(params[:id], u.id, method: :patch), class: 'btn btn-success btn-sm' %> 
-			<!-- This is the Delete This Care Button -->
-			<%= link_to "Delete this care", user_care_path(params[:id], u.id), method: :delete, data: { confirm: 'Are you sure you want to delete this care?' },	 class: 'btn btn-info btn-sm' %>
-		</li>
-	  <br/>
-	<% end %>
-</ul>
+		</div>
+		<div class="col-md-5">
+			<!-- This is the Current Daily Care Points total -->
+			<h2> 
+				<% (value_sum -= (value_sum * 0.3)).to_i %>
+				<% @user.histories.each do |u| %>
+					<% if Date.today == u.date %>
+						<% value_sum -= u.value %>
+					<% end %>
+				<% end %>
+				<% if value_sum.to_i <= 0 %>
+					<%= "You have no care points left for the day..." %>
+					<% @valuezero = true %>
+					<% else %> 
+					<%= "You Have " + value_sum.to_i.to_s + " Care Points Left for the Day" %>	
+				<% end %>
+			</h2>
 
-<br/>
-<!-- This is the form for entering Cares -->
-<h2>Enter Cares here</h2>
-<%= form_for [@user, Care.new] do |f| %>
-<%= f.text_field :care_item, placeholder: "Write your care item here" %>
-<%= f.text_field :value, placeholder: "value" %>
-<%= f.submit %>
-<% end %>
-
-<br/><br/><br/><br/>
-
-
-
-<br/><br/><br/><br/>
-<!-- Iterates through the User's History by Current Date -->
-
-<h2>These are <%= @user.name %>'s Cares Today:</h2>
-<ul>
-	<% @user.histories.each do |u| %>
-		<% if u.date == Date.today %>
-			<li> <%= u.care_item %>
-				</li>
-		<% end %>
-	<% end %>
-</ul>
-
-
-<!-- This is the Edit User Link -->
-<%= link_to "Edit #{@user.name}", edit_user_path %>
-<!-- This is the Delete User Account Link-->
-<%= link_to "Delete #{@user.name}", :user, method: :delete, data: { confirm: 'Are you sure you want to delete your profile?'} %>
- 
-
-<%= link_to "Back to all users", users_path %>
+		  <!-- Iterates through the User's History by Current Date -->
+			<h2>These are <%= @user.name %>'s Cares Today:</h2>
+			<ul class="list-unstyled">
+				<% @user.histories.each do |u| %>
+					<% if u.date == Date.today %>
+						<li>     <span class="glyphicon glyphicon-ok"></span><%= u.care_item %></li>
+					<% end %>
+				<% end %>
+			</ul>
+		</div>
+	</div>
+</div>
