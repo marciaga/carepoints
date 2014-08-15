@@ -25,10 +25,10 @@
 							<%= f.hidden_field :date, :value => Date.today %>
 							<%= f.hidden_field :care_item, :value => u.care_item %>
 							<%= f.hidden_field :value, :value => u.value %>
-							<% if @valuezero %>
+							<% if @valuezero == true %>
 						  	<%= f.submit 'Care About This!', disabled: true, class: 'btn btn-warning btn-sm' %>
 						  <% else %>
-						  		<%= f.submit 'Care About This!', disabled: false, class: 'btn btn-warning btn-sm' %>
+						  	<%= f.submit 'Care About This!', disabled: false, class: 'btn btn-warning btn-sm' %>
 						  <% end %>
 						<% end %>
 						<!-- This is the Edit This Care Button -->
@@ -56,26 +56,31 @@
 		<div class="col-md-5">
 			<!-- This is the Current Daily Care Points total -->
 			<h2> 
-				<% (value_sum -= (value_sum * 0.3)).to_i %>
+				<% (value_sum -= (value_sum * 0.3)).to_i %> 
 				<% @user.histories.each do |u| %>
 					<% if Date.today == u.date %>
 						<% value_sum -= u.value %>
 					<% end %>
 				<% end %>
-				<% if value_sum.to_i <= 0 %>
+
+				<% if value_sum <= 0 %>
 					<%= "You have no care points left for the day..." %>
-					<% @valuezero = true %>
-					<% else %> 
-					<%= "You Have " + value_sum.to_i.to_s + " Care Points Left for the Day" %>	
+				<% else %>
+					<%= "You Have " + value_sum.to_i.to_s + " Care Points Left for the Day" %>
+					<% @user.cares.each do |u| %>
+						<% if u.value >= value_sum  %>
+							<!-- set disable button to true when the care's value is less than value_sum -->
+							<% @valuezero = true %>
+						<% end %>
+					<% end %>
 				<% end %>
 			</h2>
-
 		  <!-- Iterates through the User's History by Current Date -->
 			<h2>These are <%= @user.name %>'s Cares Today:</h2>
 			<ul class="list-unstyled">
 				<% @user.histories.each do |u| %>
 					<% if u.date == Date.today %>
-						<li>     <span class="glyphicon glyphicon-ok"></span><%= u.care_item %></li>
+						<li> <span class="glyphicon glyphicon-ok"></span><%= u.care_item %></li>
 					<% end %>
 				<% end %>
 			</ul>
