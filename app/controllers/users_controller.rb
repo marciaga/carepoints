@@ -11,7 +11,10 @@ class UsersController < ApplicationController
 	def create
 		@user = User.new(params.require(:user).permit(:name, :email, :password, :password_confirmation))
 		if @user.save
-			redirect_to new_session_path
+	  	#create a new session, thereby logging in the new user
+	  	u = User.where(email: params[:user][:email]).first
+	  	session[:user_id] = u.id.to_s
+			redirect_to user_path(u.id)
 		else
 			render :new
 		end
@@ -32,7 +35,9 @@ class UsersController < ApplicationController
 				redirect_to user_path(current_user)
 			elsif @user.is_active == false
 				@user.update_attributes(params.require(:user).permit(:is_active))
-				redirect_to new_session_path
+				u = User.find(params[:id])
+				session[:user_id] = u.id.to_s
+				redirect_to user_path(u.id)	
 			else 
 				redirect_to new_session_path
 			end
@@ -47,14 +52,14 @@ class UsersController < ApplicationController
 		@user = User.find(params[:id])
 		@user.is_active = false
 		@user.save
+		#destroy session so user is automatically logged out
+		reset_session
 		redirect_to root_path
 	end
 
 	def reactivate
 		@user = User.find(params[:id])
-		
 	end
-
 
 end
 

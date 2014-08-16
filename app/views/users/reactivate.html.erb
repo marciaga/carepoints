@@ -1,5 +1,13 @@
-<%= form_for @user do |f| %>
-	<%= f.check_box :is_active %>
-	<%= f.submit "I miss Care Points...reactivate my account." %>
-<% end %>
-
+<div class="row">
+	<div class="col-sm-4 col-sm-offset-4">
+		<h1>So, you miss your Care Points?</h1>
+		<%= form_for @user do |f| %>
+			<div class="form-group">
+				<%= f.hidden_field :is_active, :value => true, class: 'form-control' %>
+			</div>
+			<div class="form-group">
+				<%= f.submit "Reactivate my account", class: 'btn btn-primary btn-large btn-block' %>
+			</div>
+		<% end %>
+	</div>	
+</div>
