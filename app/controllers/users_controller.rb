@@ -30,6 +30,9 @@ class UsersController < ApplicationController
 		if current_user != @user
 			if current_user
 				redirect_to user_path(current_user)
+			elsif @user.is_active == false
+				@user.update_attributes(params.require(:user).permit(:is_active))
+				redirect_to new_session_path
 			else 
 				redirect_to new_session_path
 			end
@@ -49,12 +52,8 @@ class UsersController < ApplicationController
 
 	def reactivate
 		@user = User.find(params[:id])
-	end
-
-	def value_display
 		
 	end
-
 
 
 end

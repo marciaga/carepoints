@@ -8,9 +8,11 @@
 
   resource :session, only: [:new, :create, :destroy] # creates 3 routes instead of 8 -- omits index
 
-  
-  get 'users/:id/reactivate' => 'users#reactivate', as: :reactivate_user
 
+  
+  get 'users/:id/reactivate' => 'users#reactivate', as: :reactivate
+  patch 'users/:id/reactivate' => 'users#reactivate', as: :reactivate_user
+  post 'users/:id/reactivate' => 'users#reactivate'
 
 
 

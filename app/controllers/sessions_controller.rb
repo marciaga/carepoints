@@ -10,7 +10,7 @@
 		u = User.where(email: params[:user][:email]).first
 		if u && u.authenticate(params[:user][:password])
 			if u.is_active == false
-				redirect_to reactivate_user_path(u.id)	
+				redirect_to reactivate_path(u.id)	
 			else
 			# store as a cookie in the users' browser the ID of them, indicating they're logged in
 				session[:user_id] = u.id.to_s
