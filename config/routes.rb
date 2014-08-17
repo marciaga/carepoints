@@ -16,6 +16,8 @@
 
   get 'pages/contact' => 'pages#contact'
   get 'pages/about' => 'pages#about'
+  get 'pages/examples' => 'pages#examples'
+  get 'pages/howto' => 'pages#howto'
 
 end
 

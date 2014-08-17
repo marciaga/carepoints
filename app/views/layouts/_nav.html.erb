@@ -38,6 +38,9 @@
                 <%= link_to 'Log out', session_path, method: :delete %>
               </li>
               <li>
+                <%= link_to 'How to', pages_howto_path %>
+              </li>
+              <li>
                 <!-- This is the Delete User Account Link-->
                 <%= link_to "Delete Account", user_path(current_user), method: :delete, data: { confirm: 'Are you sure you want to delete your profile?'} %>
               </li>

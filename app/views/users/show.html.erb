@@ -19,31 +19,26 @@
 			<h2> These are your Cares: </h2> 
 			<ul class="well well-sm list-unstyled">
 				<% @user.cares.each do |u| %>
-					<li> 
+					<li class="lead"> 
 						<%= u.care_item %>, worth <%= u.value %> care points 				
 						<!-- calculation -->
 						<% if value_sum+1 <= u.value %>
 							<% disable_care = true %>
 						<% end %>
-						<div class="row">
-							<div class="col-xs-3">
-						<!-- This populates the User Histories -->
+						<!-- This Button populates the User Histories -->
 						<%= form_for [@user, History.new] do |f| %>
 							<%= f.hidden_field :date, :value => Date.today %>
 							<%= f.hidden_field :care_item, :value => u.care_item %>
 							<%= f.hidden_field :value, :value => u.value %>
 							<!--button action -->
-							<% if disable_care == true %>
-								<%= f.submit 'Care About This!', disabled: true, class: 'btn btn-warning btn-sm' %>
+							<% if disable_care == true %>				
+								<%= f.submit 'Care About This!', disabled: true, class: 'btn btn-warning btn-md' %>
 							<% else %>
-								<%= f.submit 'Care About This!', disabled: false, class: 'btn btn-warning btn-sm' %>
+								<%= f.submit 'Care About This!', disabled: false, class: 'btn btn-warning btn-md' %>
 							<% end %>
-						<% end %>
-					</div>
-					<div class="col-xs-9">
+						<% end %>			
 						<!-- This is the Edit This Care Button -->
-						<%= link_to "Edit this care", edit_user_care_path(params[:id], u.id, method: :patch), class: 'btn btn-info btn-sm' %>
-						</div> 
+						<%= link_to "Edit this care", edit_user_care_path(params[:id], u.id, method: :patch), class: 'btn btn-info btn-md' %>			
 					</li>
 				  <br/>
 				<% end %>
@@ -74,10 +69,10 @@
 		  <!-- Iterates through the User's History by Current Date -->
 			<h2>These are <%= @user.name %>'s Cares Today:
 			</h2>
-			<ul class="list-unstyled">
+			<ul>
 				<% @user.histories.each do |u| %>
 					<% if u.date == Date.today %>
-						<li> <%= u.care_item %></li>
+						<li class="lead"> <%= u.care_item %></li>
 					<% end %>
 				<% end %>
 			</ul>
