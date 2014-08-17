@@ -14,7 +14,8 @@
   patch 'users/:id/reactivate' => 'users#reactivate', as: :reactivate_user
   post 'users/:id/reactivate' => 'users#reactivate'
 
-
+  get 'pages/contact' => 'pages#contact'
+  get 'pages/about' => 'pages#about'
 
 end
 

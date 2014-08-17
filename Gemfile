@@ -23,6 +23,8 @@ gem 'bootstrap-sass', '~> 3.2.0'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
+
+
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 
@@ -39,6 +41,8 @@ end
 
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
+
+
 
 # use mongo mapper
 # gem 'mongo_mapper'

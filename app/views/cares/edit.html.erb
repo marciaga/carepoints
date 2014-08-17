@@ -2,16 +2,21 @@
 	<div class="col-sm-4 col-sm-offset-4">
 		<h1>Edit this care</h1>
 		<%= form_for [@user, @care] do |f| %>
-		<div class="form-group">
-			<%= f.text_field :care_item, placeholder: "Care Item", class: 'form-control' %>
-		</div>
-		<div class="form-group">
-			<%= f.text_field :value, placeholder: "Value", class: 'form-control' %>
-		</div>
-		<div class="form-group">
-			<%= f.submit "Submit", class: 'btn btn-primary btn-large btn-block' %>
-		</div>
+			<div class="form-group">
+				<%= f.text_field :care_item, placeholder: "Care Item", class: 'form-control' %>
+			</div>
+			<div class="form-group">
+				<%= f.text_field :value, placeholder: "Value", class: 'form-control' %>
+			</div>
+			<div class="form-group">
+				<%= f.submit "Submit", class: 'btn btn-primary btn-large btn-block' %>
+			</div>
 		<% end %>
+		
+		<div class="form-group">
+		<%= button_to "Delete this care", user_care_path, method: :delete, data: { confirm: 'Are you sure you want to delete this care?' }, class: 'btn btn-danger btn-large btn-block' %>
+		</div>
+		
 		<div class="text-center">
 			<%= link_to "Back to your profile", user_path(params[:user_id]), class: 'btn btn-warning btn-large btn-block' %>
 		</div>
